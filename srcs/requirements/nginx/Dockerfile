@@ -15,11 +15,11 @@ COPY index.html /var/www/html
 COPY default.conf /etc/nginx/http.d/
 
 #get the certificat key
-# RUN mkdir /etc/nginx/ssl && \
-#     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-#     -keyout /etc/nginx/ssl/gothmame.key \
-#     -out /etc/nginx/ssl/gothmame.crt  \
-#     -subj "/C=MA/L=Tetouan/O=42/OU=1337 MED/CN=gothmame.42.fr"
+RUN mkdir /etc/nginx/ssl && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/gothmame.key \
+    -out /etc/nginx/ssl/gothmame.crt  \
+    -subj "/C=MA/L=Tetouan/O=42/OU=1337 MED/CN=gothmame.42.fr"
 
 EXPOSE 443
 

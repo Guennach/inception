@@ -17,16 +17,19 @@ RUN apt-get update && \
     php8.2 \
     php8.2-fpm \
     php8.2-mysql \
-    curl \
+    curl 
 # RUN sed -i "s|listen = /run/php/php8.2-fpm.sock|listen = 0.0.0.0:9000|g" etc/php/8.2/fpm/pool.d/www.conf
+# RUN sed -i "s|listen = /run/php/php8.2-fpm.sock | listen = 0.0.0.0:9000|g" etc/php/8.2/fpm/pool.d/www.conf
+# RUN sed -i "s|listen = /run/php/php8.2-fpm.sock|listen = 0.0.0.0:9000|g" /etc/php/8.2/fpm/pool.d/www.conf
+
 COPY script.sh .
 
 # # COPY wp-config.php /
 
 RUN chmod +x script.sh
 
-# EXPOSE 9000
+EXPOSE 9000
 
 ENTRYPOINT [ "sh", "script.sh" ]
 
-CMD ["php-fpm8.2", "-F"]
+# CMD ["php-fpm8.2", "-F"]

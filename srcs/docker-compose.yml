@@ -1,10 +1,8 @@
-version: "2.0" 
-
 services:
 
   mariadb:
     build: requirements/mariadb/.
-    container_name: mariadb 
+    container_name: mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
     ports:
@@ -17,9 +15,11 @@ services:
     build: requirements/wordpress/.
     container_name: wordpress
     volumes:
-      - ./wordpress_data:/var/www/html
+      - ./wordpress_data:/var/www/html/wordpress
     depends_on:
       - mariadb
+    ports:
+      - "9000:9000"
     networks:
       - inception
     restart: always
@@ -29,9 +29,8 @@ services:
     container_name: nginx
     ports:
       - "443:443"
-      - "80:80"
     volumes:
-      - ./wordpress_data:/var/www/html
+      - ./wordpress_data:/var/www/html/wordpress
     depends_on:
       - wordpress
     restart: always
@@ -45,13 +44,13 @@ networks:
 
 volumes:
   mariadb_data:
-    driver: local  # May be implicit in older versions
+    driver: local
     driver_opts:
-      type: none  # Default for bind mounts
-      o: bind  # Corrected typo (option for bind mount)
-      device: /home/ubuntu/inception/inception/srcs/mariadb_data
+      type: none
+      o: bind  
+      device: /workspaces/inception/srcs/mariadb_data
   wordpress_data:
     driver_opts:
       type: none
       o : bind
-      device : /home/ubuntu/inception/inception/srcs/wordpress_data
+      device : /workspaces/inception/srcs/wordpress_data
