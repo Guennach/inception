@@ -4,11 +4,11 @@ echo "script in\n";
 
 mariadb-install-db  --user=mysql --datadir=/var/lib/mysql
 
-if [ -d "/var/lib/mysql/wordpress"]; then
-    echo "Database already exists"
-    exec "$@"
-    exit 0
-fi
+# if [ -d "/var/lib/mysql/wordpress"]; then
+#     echo "Database already exists"
+#     exec "$@"
+#     exit 0
+# fi
 
 cat << EOF > /tmp/init_db.sql
 
