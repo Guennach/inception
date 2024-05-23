@@ -1,18 +1,8 @@
 FROM alpine:3.18
 
-# get nginx and openssl
-# -y force yes
 RUN apk update && apk add nginx openssl
 
-WORKDIR /var/www/
-
-RUN mkdir html
-
-# RUN chown www-data:www-data /var/www/html/
-
-COPY index.html /var/www/html
-
-COPY default.conf /etc/nginx/http.d/
+COPY /conf/default.conf /etc/nginx/http.d/
 
 #get the certificat key
 RUN mkdir /etc/nginx/ssl && \
@@ -21,10 +11,7 @@ RUN mkdir /etc/nginx/ssl && \
     -out /etc/nginx/ssl/gothmame.crt  \
     -subj "/C=MA/L=Tetouan/O=42/OU=1337 MED/CN=gothmame.42.fr"
 
-EXPOSE 443
-
-
-
+# EXPOSE 443
 # "nginx": This is the main executable or binary to be executed. 
 # It refers to the Nginx web server.
 # "-g": This is an argument for Nginx, used to pass global configurations.

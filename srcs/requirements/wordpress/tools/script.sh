@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# mv wp-config.php /var/www/html/
-# until mysql -h mariadb -u gothmane -p gothmane -e 'exit'; do
-#   echo 'Waiting for MariaDB...'
-#   sleep 1
-# done
-
 mkdir -p /var/www/html/wordpress
 chmod -R 777 /var/www/html/wordpress
 chown -R www-data:www-data /var/www/html/wordpress
@@ -19,16 +13,21 @@ chmod +x wp-cli.phar
 
 mv wp-cli.phar /usr/local/bin/wp
 
-# if [ -f ""]
 wp core download --allow-root
 
 echo "config file start"
 
-wp config create --dbname=wordpress --dbuser=gothmane --dbpass=gothmane --dbhost=mariadb:3306 --allow-root
+if [ -f "/var/www/html/wordpress/wp-config.php" ]; then
+    echo "[WordPress] :=> Already Exists !"
+else
+    echo "[WordPress] :=> Got Created !"
+    wp config create --dbname=${DB_NAME} --dbuser=${DB_USER_NAME} --dbpass=${DB_USER_PASSWORD} --dbhost=mariadb:3306 --allow-root
+fi
 
-echo "config file created"
+wp core install --url=${WEBSITE} --title=inception --admin_user=${ADMIN_USER} --admin_password=${ADMIN_PASS} --admin_email=${ADMIN_EMAIL} --allow-root
 
-wp core install --url=localhost --title=inception --admin_user=root --admin_password=root --admin_email=root@root.com --allow-root
+# Add a new normal user
+wp user create ${USER_NAME} ${USER_EMAIL} --role=subscriber --user_pass=${USER_PASS} --allow-root
 
 echo "install done"
 
