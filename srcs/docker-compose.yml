@@ -3,7 +3,7 @@ services:
   mariadb:
     build: requirements/mariadb/.
     container_name: mariadb
-    image: mariadb:1337
+    image: mariadb
     volumes:
       - mariadb:/var/lib/mysql
     restart: always
@@ -15,7 +15,7 @@ services:
   wordpress:
     build: requirements/wordpress/.
     container_name: wordpress
-    image: wordpress:1337
+    image: wordpress
     volumes:
       - wordpress:/var/www/html/wordpress
     depends_on:
@@ -29,7 +29,7 @@ services:
   nginx:
     build: requirements/nginx/.
     container_name: nginx
-    image: nginx:1337
+    image: nginx
     ports:
       - "443:443"
     volumes:
@@ -50,7 +50,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      o: bind  
+      o: bind
       device: /home/gothmane/data/mariadb/
   wordpress:
     driver_opts:

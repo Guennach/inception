@@ -3,7 +3,6 @@
 mkdir -p /var/www/html/wordpress
 chmod -R 777 /var/www/html/wordpress
 chown -R www-data:www-data /var/www/html/wordpress
-# chown -R www-data:www-data /var/www/html/wordpress/*
 
 cd /var/www/html/wordpress
 
@@ -26,8 +25,7 @@ fi
 
 wp core install --url=${WEBSITE} --title=inception --admin_user=${ADMIN_USER} --admin_password=${ADMIN_PASS} --admin_email=${ADMIN_EMAIL} --allow-root
 
-# Add a new normal user
-wp user create ${USER_NAME} ${USER_EMAIL} --role=subscriber --user_pass=${USER_PASS} --allow-root
+wp user create ${USER_NAME} ${USER_EMAIL} --role=editor --user_pass=${USER_PASS} --allow-root
 
 echo "install done"
 
